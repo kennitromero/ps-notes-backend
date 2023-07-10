@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Web\Contacts\{
+    CreateUIController,
+    StoreController,
+};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +20,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('contacts/create', CreateUIController::class);
+Route::post('contacts/store', StoreController::class);
