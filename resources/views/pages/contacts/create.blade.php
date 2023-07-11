@@ -7,6 +7,7 @@
 <body>
     <h2>Crear contacto</h2>
     <form action="{{ url('contacts/store') }}" method="POST">
+        @csrf
     
         <label for="full_name">Nombre completo</label>
         <input type="text" id="full_name" name="full_name">
@@ -19,7 +20,6 @@
         <br>
 
         <button type="submit">Crear</button>
-
     </form>
 </body>
 </html>
