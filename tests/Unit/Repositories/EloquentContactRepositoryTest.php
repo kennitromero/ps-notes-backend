@@ -21,7 +21,7 @@ class EloquentContactRepositoryTest extends TestCase
 
     public function testMethodStoreContactWhenResponseSuccess(): void
     {
-        // Dado: 
+        // Dado:
         $tempFullName = 'Foo Bar';
         $tempPhone = '3001239988';
 
@@ -43,7 +43,7 @@ class EloquentContactRepositoryTest extends TestCase
 
     public function testMethodFindAllContactsResponseSuccess(): void
     {
-        // Dado: 
+        // Dado:
         // ¿Deben existir? bueno, debería existir un número
         // determinado de contactos en tabla de la base de datos
         Contact::create([
@@ -71,5 +71,53 @@ class EloquentContactRepositoryTest extends TestCase
         $this->assertSame($result[0]->full_name, 'Kennit');
         $this->assertSame($result[1]->full_name, 'Walter');
         $this->assertSame($result[2]->full_name, 'Daniel');
+    }
+
+    public function testMethodUpdateContactWhenResponseSuccess(): void
+    {
+        // Dado el contexto:
+        $contactCreated = Contact::create([
+            'full_name' => 'Kennit',
+            'phone' => '3045652958'
+        ]);
+
+        // Cuando se ejecute:
+        $eloquentContactRepository = new EloquentContactRepository();
+        $eloquentContactRepository->update(
+            'Andrea',
+            '3016081310',
+            $contactCreated->id
+        );
+
+        // Debería pasar:
+        $this->assertDatabaseHas('contacts', [
+            'id' => $contactCreated->id,
+            'full_name' => 'Andrea',
+            'phone' => '3016081310'
+        ]);
+
+        $this->assertDatabaseMissing('contacts', [
+            'id' => $contactCreated->id,
+            'full_name' => 'Kennit',
+            'phone' => '3045652958'
+        ]);
+    }
+
+    public function testMethodDeleteContactWhenResponseSuccess(): void
+    {
+        // Dado el contexto:
+        $contactCreated = Contact::create([
+            'full_name' => 'Pepito',
+            'phone' => '3445556789'
+        ]);
+
+        // Al ejecutar o cuando se ejecute
+        $eloquentContactRepository = new EloquentContactRepository();
+        $eloquentContactRepository->delete($contactCreated->id);
+
+        // Debería pasar:
+        $this->assertDatabaseMissing('contacts', [
+            'id' => $contactCreated->id
+        ]);
     }
 }
