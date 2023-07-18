@@ -20,4 +20,9 @@ class EloquentProductRepository {
     {
         return Product::all(['id', 'name', 'price']);
     }
+
+    public function delete(int $productID): void
+    {
+        Product::destroy($productID);
+    }
 }
