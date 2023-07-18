@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 45);
             $table->string('image', 120);
-            $table->float('price', 8, 2);
+            $table->float('price', 9, 2);
             $table->timestamps();
         });
     }

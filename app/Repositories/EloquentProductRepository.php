@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Collection;
 
 class EloquentProductRepository {
 
@@ -13,5 +14,10 @@ class EloquentProductRepository {
             'image' => $image,
             'price' => $price
         ]);
+    }
+
+    public function getAll(): Collection
+    {
+        return Product::all(['id', 'name', 'price']);
     }
 }
