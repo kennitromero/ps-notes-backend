@@ -21,6 +21,21 @@ class EloquentProductRepository {
         return Product::all(['id', 'name', 'price']);
     }
 
+    public function findByID(int $productID): Product
+    {
+        return Product::find($productID);
+    }
+
+    public function update(int $productID, string $name, string $image, float $price): void
+    {
+        $product = $this->findByID($productID);
+        $product->name = $name;
+        $product->image = $image;
+        $product->price = $price;
+
+        $product->save();
+    }
+
     public function delete(int $productID): void
     {
         Product::destroy($productID);
