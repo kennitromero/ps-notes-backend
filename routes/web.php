@@ -1,9 +1,17 @@
 <?php
 
+use App\Http\Controllers\Web\Auth\{
+    AuthenticationController,
+    RegisterController,
+    CreateAccountController,
+    LoginController,
+    LogoutController,
+};
 use App\Http\Controllers\Web\Contacts\{
     CreateUIController,
     StoreController,
 };
+use App\Http\Controllers\Web\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,3 +31,13 @@ Route::get('/', function () {
 
 Route::get('contacts/create', CreateUIController::class);
 Route::post('contacts/store', StoreController::class);
+
+Route::get('register', RegisterController::class);
+Route::post('register', CreateAccountController::class);
+
+Route::get('login', LoginController::class);
+Route::post('login', AuthenticationController::class);
+
+Route::post('logout', LogoutController::class);
+
+Route::get('home', HomeController::class);
