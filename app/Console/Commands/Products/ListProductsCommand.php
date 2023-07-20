@@ -15,7 +15,7 @@ class ListProductsCommand extends Command
         $this->info("DASHBOARD - PRODUCTS - LISTADO");
 
         $productRepository = new EloquentProductRepository();
-        $products = $productRepository->getAll();
+        $products = $productRepository->getAll(['id', 'name', 'price']);
 
         $this->table(['ID', 'Nombre', 'Precio'], $products);
     }

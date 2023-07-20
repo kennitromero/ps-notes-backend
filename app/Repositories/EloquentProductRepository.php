@@ -16,9 +16,9 @@ class EloquentProductRepository {
         ]);
     }
 
-    public function getAll(): Collection
+    public function getAll(array $columns): Collection
     {
-        return Product::all(['id', 'name', 'price']);
+        return Product::all($columns);
     }
 
     public function findByID(int $productID): Product

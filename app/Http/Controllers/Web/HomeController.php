@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Repositories\EloquentProductRepository;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController
@@ -12,6 +13,11 @@ class HomeController
             return redirect()->to('/login');
         }
 
-        return view('home');
+        $productRepository = new EloquentProductRepository();
+        $products = $productRepository->getAll(['id', 'name', 'price', 'image']);
+
+        return view('home', [
+            'products' => $products,
+        ]);
     }
 }
