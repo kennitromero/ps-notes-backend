@@ -23,7 +23,8 @@
     <!-- los productos que tiene la tienda --->
     <div style="margin-top:10px;text-align:center;">
         @forelse ($products as $product)
-            <label for="product_{{ $product->id }}" style="border:1px solid #333;padding:5px;display:inline-block">
+            <label for="product_{{ $product->id }}" 
+                style="border:1px solid #333;padding:5px;display:inline-block;margin:5px 4px;border-radius:5px">
                 <p style="margin: 5px 0">
                     <strong>
                         {{ $product->name }}
@@ -31,7 +32,7 @@
                     <br>
                     <small>Precio: {{ $product->price }}</small>
                 </p>
-                <img src="{{ $product->image }}" width="100" alt="Imagen de producto">
+                <img src="{{ $product->image }}" width="100" alt="Imagen de producto" style="border: 1px solid #ddd;border-radius:5px;">
                 <br>
 
                 Seleccionar
