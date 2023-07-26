@@ -32,3 +32,20 @@ URL del código: https://github.com/kennitromero/ps-notes-backend
 - Home `app/Http/Controllers/Web/HomeController.php`
     - Visualización de usuario logueado
     - Visualización de productos con su nombre, imagen, precio y botón para seleccionar.
+- Carrito de compras
+    - ¿Dónde se va a guardar la información del carrito de compras? vamos a guardar el carrito de cada usuario en la base de datos
+    - Si vamos a guardar en la base de datos ¿qué necesitamos hacer? necesitamos hacer una tabla a través de una migración, la vamos a llamar carts
+    - Ahora, debemos definir qué campos vamos a poner en nuestra tabla. Los campos/columnas que vamos a guardar:
+        - ID Producto (nombre, precio e imagen)
+        - Cantidad
+        - ID del usuario (a quién pertenece el producto de este carrito)
+    - Debemos crear el modelo para poder conectarnos con la tabla que acabamos de crear para poder crear o eliminar registros.
+    - Necesitamos crear un controlador dos controladores
+        - Controlador que nos permitan aumentar la cantidad de un producto o agregar un producto al carrito
+            - Nos toca revisar si ya existe en el carrito el producto que el usuario intenta agregar
+        - Controlador que nos permite eliminar la cantidad de un producto o eliminar un producto del carrito
+    - Agregué dos botones por cada producto para asociar las rutas de agregar o eliminar un producto del carrito
+
+    - Lo queremos lograr es que un usuario logueado pueda 
+        - Agregar productos de un carrito.
+        - Eliminar productos de un carrito.

@@ -19,6 +19,10 @@
         <button type="submit">Cerrar Sesión</button>
     </form>
 
+    <h4 style="text-align: center;">
+        Llevas {{ $quantityTotal }} productos
+    </h4>
+
     <hr>
     <!-- los productos que tiene la tienda --->
     <div style="margin-top:10px;text-align:center;">
@@ -35,8 +39,18 @@
                 <img src="{{ $product->image }}" width="100" alt="Imagen de producto" style="border: 1px solid #ddd;border-radius:5px;">
                 <br>
 
-                Seleccionar
-                <input type="checkbox" id="product_{{ $product->id }}" name="product[]">
+                <form action="{{ url('cart/add') }}" method="POST" style="display: inline-block;">
+                    @csrf
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                    <button type="submit">+</button>
+                </form>
+
+                <form action="{{ url('cart/remove') }}" method="POST" style="display: inline-block;">
+                    @csrf
+                    @method('DELETE')
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                    <button type="submit">-</button>
+                </form>
             </label>
         @empty
             <p style="text-align: center;">No hay productos en esta tienda, vuelta pronto.</p>
