@@ -7,6 +7,10 @@ use App\Http\Controllers\Web\Auth\{
     LoginController,
     LogoutController,
 };
+use App\Http\Controllers\Web\Cart\{
+    AddProductController,
+    RemoveProductController
+};
 use App\Http\Controllers\Web\Contacts\{
     CreateUIController,
     StoreController,
@@ -41,3 +45,6 @@ Route::post('login', AuthenticationController::class);
 Route::post('logout', LogoutController::class);
 
 Route::get('home', HomeController::class);
+
+Route::post('cart/add', AddProductController::class);
+Route::delete('cart/remove', RemoveProductController::class);
