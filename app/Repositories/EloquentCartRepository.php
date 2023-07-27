@@ -3,10 +3,16 @@
 namespace App\Repositories;
 
 use App\Models\Cart;
+use Illuminate\Database\Eloquent\Collection;
 
 class EloquentCartRepository 
 {
     public const QUATITY_INIT = 1;
+
+    public function getUserCart(int $userId): Collection
+    {
+        return Cart::where('user_id', '=', $userId)->get();
+    }
 
     public function getUserCartByProduct(int $userId, int $productId): ?Cart
     {
