@@ -49,3 +49,5 @@ URL del código: https://github.com/kennitromero/ps-notes-backend
     - Lo queremos lograr es que un usuario logueado pueda 
         - Agregar productos de un carrito.
         - Eliminar productos de un carrito.
+- Visualización del carrito de compras, necesito visualizar qué productos tengo en el carrito, con sus respectivas cantidades, el sub total por cada producto y el total de la compra
+    - 

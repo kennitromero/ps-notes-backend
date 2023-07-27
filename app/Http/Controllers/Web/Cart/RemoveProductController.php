@@ -3,31 +3,31 @@
 namespace App\Http\Controllers\Web\Cart;
 
 use App\Models\Cart;
+use App\Repositories\EloquentCartRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class RemoveProductController
 {
-    private const QUATITY_INIT = 1;
-
     public function __invoke(Request $request)
     {
         $userId = Auth::id();
-        $productId = $request->get('product_id');
+        $productId = (int) $request->get('product_id');
 
-        $cartOrNull = Cart::where('product_id', '=', $productId)->where('user_id', '=', $userId)->first();
+        $cartRepository = new EloquentCartRepository();
+
+        $cartOrNull = $cartRepository->getUserCartByProduct($userId, $productId);
 
         if (is_null($cartOrNull)) {
             return redirect()->back();
         }
 
-        if ($cartOrNull->quantity === self::QUATITY_INIT) {
-            Cart::destroy($cartOrNull->id);
+        if ($cartOrNull->quantity === $cartRepository::QUATITY_INIT) {
+            $cartRepository->deleteCart($cartOrNull->id);
             return redirect()->back();
         }
 
-        $cartOrNull->quantity--;
-        $cartOrNull->save();
+        $cartRepository->removeAndUnitQuantity($cartOrNull);        
 
         return redirect()->back();
     }
