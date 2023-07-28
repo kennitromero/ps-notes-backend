@@ -48,11 +48,7 @@ Route::post('logout', LogoutController::class);
 Route::get('home', HomeController::class);
 
 Route::post('cart/add', AddProductController::class);
-<<<<<<< Updated upstream
-Route::delete('cart/remove', RemoveProductController::class);
-=======
 Route::delete('cart/remove', RemoveProductController::class);
 
 Route::get('cart-summary', CartSummaryController::class);
 Route::get('checkout', CheckoutController::class);
->>>>>>> Stashed changes
