@@ -3,39 +3,30 @@
 namespace App\Http\Controllers\Web\Checkout;
 
 use App\Repositories\EloquentCartRepository;
+use App\UseCases\{
+    CalculateDeliveryAmountUseCase,
+    CalculateSubTotalAmountUseCase,
+    CalculateTotalAmountUseCase
+};
 use Illuminate\Support\Facades\Auth;
 
-class CheckoutController 
+class CheckoutController
 {
-    private const IVA_PERCENTAGE = 0.19;
-
     public function __invoke()
     {
         $userId = Auth::id();
         $cartRepository = new EloquentCartRepository();
+        $calculateSubTotalAmountUseCase = new CalculateSubTotalAmountUseCase();
+        $calculateDeliveryAmountUseCase = new CalculateDeliveryAmountUseCase();
+
         $carts = $cartRepository->getUserCart($userId);
 
-        $subTotal = 0;
-        $deliveryAmount = 0;
-        foreach ($carts as $cart) {
-            $subTotal += $cart->quantity * $cart->product->price;
-        }
+        $subTotal = $calculateSubTotalAmountUseCase->execute($carts);
+        $deliveryAmount = $calculateDeliveryAmountUseCase->execute($subTotal);
 
-        if ($subTotal < 312000) {
-            $deliveryAmount = 45000;
-        }
-
-        if ($subTotal >= 312000 && $subTotal < 1412000) {
-            $deliveryAmount = 30000;
-        }
-
-        if ($subTotal >= 1412000) {
-            $deliveryAmount = 20000;
-        }
-
-        $iva = ($subTotal + $deliveryAmount) * self::IVA_PERCENTAGE;
-
-        $total = $subTotal + $deliveryAmount + $iva;
+        $calculateTotalAmountUseCase = new CalculateTotalAmountUseCase($subTotal, $deliveryAmount);
+        $total = $calculateTotalAmountUseCase->getTotal();
+        $iva = $calculateTotalAmountUseCase->getIVA();
 
         return view('checkout', [
             'subTotal' => $subTotal,

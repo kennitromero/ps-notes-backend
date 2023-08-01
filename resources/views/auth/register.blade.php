@@ -14,18 +14,32 @@
         <h3>Crear tu cuenta</h3>
 
         <label for="name">Nombre</label>
-        <input type="text" name="name" id="name" placeholder="Pepito Pérez" value="Pepito Perez">
+        <input type="text" name="name" id="name" placeholder="Pepito Pérez" value="{{ old('name') }}">
         <br><br>
 
         <label for="email">Correo electrónico</label>
-        <input type="text" name="email" id="email" placeholder="pepito@perez.co" value="p@pepito.co">
+        <input type="text" name="email" id="email" placeholder="pepito@perez.co" value="{{ old('email') }}">
         <br><br>
 
         <label for="password">Contraseña</label>
-        <input type="password" name="password" id="password" value="loqueseapassword">
+        <input type="password" name="password" id="password">
         <br><br>
 
+        @if (session()->has('message'))
+        <strong>
+            {{ session()->get('message') }}
+        </strong>
+        <br><br>
+        @endif
+
         <button type="submit">Crear mi cuenta</button>
+
+        <br>
+
+        ¿Ya tienes una cuenta?
+        <a href="{{ url('login') }}">
+            ven a iniciar sesión
+        </a>
 
     </form>
 </body>

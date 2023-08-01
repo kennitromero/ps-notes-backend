@@ -22,7 +22,7 @@
 
     <h4 style="text-align: center;">
         <small style="display: block">
-            <a href="{{ url('/') }}" style="text-align: center;">Volver al catálogo</a>
+            <a href="{{ url('/cart-summary') }}" style="text-align: center;">Volver al carrito</a>
         </small>
     </h4>
 

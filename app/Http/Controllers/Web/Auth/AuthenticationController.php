@@ -12,6 +12,8 @@ class AuthenticationController
 {
     public function __invoke(Request $request)
     {
+        // ToDo, validaciones
+
         $email = $request->get('email');
         $password = $request->get('password');
 
