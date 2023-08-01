@@ -57,3 +57,4 @@ URL del código: https://github.com/kennitromero/ps-notes-backend
     - Visualizar el sub total de los productos comprados, es decir, la sumatoria de las cantidads * precio unitario    
     - Visualizar el valor del IVA del 19%
     - Visualizar el valor del domicilio, que será calculado según el sub total de la compra + IVA
+    - Crear un enlace entre el catálogo y la página del resumen del carrito

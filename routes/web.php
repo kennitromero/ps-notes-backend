@@ -9,7 +9,8 @@ use App\Http\Controllers\Web\Auth\{
 };
 use App\Http\Controllers\Web\Cart\{
     AddProductController,
-    RemoveProductController
+    RemoveProductController,
+    CartSummaryController
 };
 use App\Http\Controllers\Web\Checkout\CheckoutController;
 use App\Http\Controllers\Web\Contacts\{
@@ -30,10 +31,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('contacts/create', CreateUIController::class);
 Route::post('contacts/store', StoreController::class);
 
@@ -45,7 +42,7 @@ Route::post('login', AuthenticationController::class);
 
 Route::post('logout', LogoutController::class);
 
-Route::get('home', HomeController::class);
+Route::get('/', HomeController::class);
 
 Route::post('cart/add', AddProductController::class);
 Route::delete('cart/remove', RemoveProductController::class);
