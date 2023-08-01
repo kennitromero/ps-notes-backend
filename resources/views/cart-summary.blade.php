@@ -42,8 +42,8 @@
                     style="border: 1px solid #ddd;border-radius:5px;">
             </td>
             <td>{{ $cart->quantity }}</td>
-            <td>{{ $cart->product->price }}</td>
-            <td>{{ $cart->quantity * $cart->product->price }}</td>
+            <td>{{ format_cop($cart->product->price) }}</td>
+            <td>{{ format_cop($cart->quantity * $cart->product->price) }}</td>
         </tr>
         @empty
         <tr>
@@ -66,9 +66,15 @@
             <td></td>
             <td>{{ $quantityTotal }}</td>
             <td></td>
-            <td>{{ $amountTotal }}</td>
+            <td>{{ format_cop($amountTotal) }}</td>
         </tr>
     </table>
+
+    <div style="text-align: center">
+        <a href="{{ url('checkout') }}">
+            Ir a pagar
+        </a>
+    </div>
     
 </body>
 </html>

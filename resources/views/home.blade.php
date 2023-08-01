@@ -38,7 +38,7 @@
                         {{ $product->name }}
                     </strong>
                     <br>
-                    <small>Precio: {{ $product->price }}</small>
+                    <small>Precio: {{ format_cop($product->price) }}</small>
                 </p>
                 <img src="{{ $product->image }}" width="100" alt="Imagen de producto"
                     style="border: 1px solid #ddd;border-radius:5px;">
