@@ -20,7 +20,7 @@ class AuthenticationController
 
         if (!is_null($userOrNull) && Hash::check($password, $userOrNull->password)) {
             Auth::login($userOrNull);
-            return redirect()->to('/home');
+            return redirect()->to('/');
         }
 
         return redirect()

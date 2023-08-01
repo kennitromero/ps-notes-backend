@@ -50,4 +50,6 @@ URL del código: https://github.com/kennitromero/ps-notes-backend
         - Agregar productos de un carrito.
         - Eliminar productos de un carrito.
 - Visualización del carrito de compras, necesito visualizar qué productos tengo en el carrito, con sus respectivas cantidades, el sub total por cada producto y el total de la compra
-    - 
+    - Crear una vista donde se consolida la información
+    - Crear el controlador donde sumamos las cantidades, el precio sub total y total
+    - Crear un enlace entre el catálogo y la página del resumen del carrito
