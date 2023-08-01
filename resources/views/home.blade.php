@@ -27,6 +27,15 @@
         </small>
     </h4>
 
+    @if (session()->has('message'))
+        <p style="text-align: center">
+            <strong>
+                {{ session()->get('message') }}
+            </strong>
+            <br><br>
+        </p>
+    @endif
+
     <hr>
     <!-- los productos que tiene la tienda --->
     <div style="margin-top:10px;text-align:center;">

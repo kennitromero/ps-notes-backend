@@ -12,7 +12,10 @@ use App\Http\Controllers\Web\Cart\{
     RemoveProductController,
     CartSummaryController
 };
-use App\Http\Controllers\Web\Checkout\CheckoutController;
+use App\Http\Controllers\Web\Checkout\{
+    CheckoutController,
+    CreateOrderController
+};
 use App\Http\Controllers\Web\Contacts\{
     CreateUIController,
     StoreController,
@@ -49,3 +52,4 @@ Route::delete('cart/remove', RemoveProductController::class);
 
 Route::get('cart-summary', CartSummaryController::class);
 Route::get('checkout', CheckoutController::class);
+Route::post('checkout', CreateOrderController::class);

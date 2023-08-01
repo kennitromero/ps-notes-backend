@@ -14,7 +14,7 @@
         <h3>Iniciar Sesión</h3>
 
         <label for="email">Correo electrónico</label>
-        <input type="text" name="email" id="email" placeholder="pepito@perez.co" value=" }}">{{ old('email')
+        <input type="text" name="email" id="email" placeholder="pepito@perez.co" value="{{ old('email') }}">
         <br><br>
 
         <label for="password">Contraseña</label>

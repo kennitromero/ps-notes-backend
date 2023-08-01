@@ -53,6 +53,12 @@
         </tr>
     </table>
 
+    <form action="{{ url('checkout') }}" method="POST" style="text-align: center;margin-top:20px;">
+        @csrf
+
+        <button type="submit">Realizar Compra</button>
+    </form>
+
 </body>
 
 </html>

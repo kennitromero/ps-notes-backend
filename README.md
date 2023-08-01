@@ -58,3 +58,10 @@ URL del código: https://github.com/kennitromero/ps-notes-backend
     - Visualizar el valor del IVA del 19%
     - Visualizar el valor del domicilio, que será calculado según el sub total de la compra + IVA
     - Crear un enlace entre el catálogo y la página del resumen del carrito
+- Creación de la compra (orden)
+    - Se debería guardar en la base de datos
+        - Los productos que el usuario compró con sus respectivos precios, cantidades y sub totales
+        - Los totales de la compra, IVA, valor del domicilio y total de la compra, se deberían guardar las fechas en las cuales se hizo el pedido, los datos del cliente que realizó la compra y el estado de la compra, si fue "pendiente", "completada" o "cancelada".
+    - ¿Qué se debe hacer técnicamente para cumplir con los requerimientos anteriormente mencionados?
+        - Debemos crear unas tablas para guardar la información de la compra.
+        - Vamos a crear la tabla orders y order con productos para guardar la información respectiva.

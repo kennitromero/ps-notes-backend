@@ -46,4 +46,9 @@ class EloquentCartRepository
     {
         Cart::destroy($cartId);
     }
+
+    public function clearCart(int $userId): void
+    {
+        Cart::where('user_id', '=', $userId)->delete();
+    }
 }
