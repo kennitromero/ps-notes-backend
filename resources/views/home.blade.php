@@ -27,6 +27,10 @@
         </small>
     </h4>
 
+    <p style="text-align: center;">
+        <a href="{{ url('orders') }}" style="text-align: center;">Mis Órdenes</a>
+    </p>    
+
     @if (session()->has('message'))
         <p style="text-align: center">
             <strong>

@@ -20,6 +20,7 @@ use App\Http\Controllers\Web\Contacts\{
     CreateUIController,
     StoreController,
 };
+use App\Http\Controllers\Web\Orders\HistoryOrderController;
 use App\Http\Controllers\Web\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -53,3 +54,5 @@ Route::delete('cart/remove', RemoveProductController::class);
 Route::get('cart-summary', CartSummaryController::class);
 Route::get('checkout', CheckoutController::class);
 Route::post('checkout', CreateOrderController::class);
+
+Route::get('orders', HistoryOrderController::class);

@@ -26,8 +26,8 @@ class ProductsSeeder extends Seeder
                 'price' => 1071520,
             ],
             [
-                'name' => 'Sofá 
-            Quito', 'image' => 'https://tugocolombia.vtexassets.com/arquivos/ids/275166-1200-auto',
+                'name' => 'Sofá Quito', 
+                'image' => 'https://tugocolombia.vtexassets.com/arquivos/ids/275166-1200-auto',
                 'price' => 1895000,
             ],
             [
@@ -36,8 +36,8 @@ class ProductsSeeder extends Seeder
                 'price' => 349000,
             ],
             [
-                'name' => 'Cama 
-            Queen', 'image' => 'https://tugocolombia.vtexassets.com/arquivos/ids/253728-1200-auto',
+                'name' => 'Cama Queen', 
+                'image' => 'https://tugocolombia.vtexassets.com/arquivos/ids/253728-1200-auto',
                 'price' => 1639000,
             ]
         ];
