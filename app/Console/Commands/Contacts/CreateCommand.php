@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands\Contacts;
 
-use App\Models\Contact;
 use App\Repositories\EloquentContactRepository;
 use Illuminate\Console\Command;
 
