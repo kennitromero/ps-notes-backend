@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Web\Checkout;
 
+use App\Models\Order;
+use App\Models\OrderProduct;
 use App\Repositories\EloquentCartRepository;
 use App\UseCases\{
     CalculateDeliveryAmountUseCase,
@@ -10,13 +12,11 @@ use App\UseCases\{
 };
 use Illuminate\Support\Facades\Auth;
 
-class CheckoutController
+class CreateOrderController
 {
     public function __invoke()
     {
         $userId = Auth::id();
-
-        // ToDo, pendiente, poner toda la lógica de cálculo de checkout en un caso de uso
         $cartRepository = new EloquentCartRepository();
         $calculateSubTotalAmountUseCase = new CalculateSubTotalAmountUseCase();
         $calculateDeliveryAmountUseCase = new CalculateDeliveryAmountUseCase();
@@ -27,14 +27,35 @@ class CheckoutController
         $deliveryAmount = $calculateDeliveryAmountUseCase->execute($subTotal);
 
         $calculateTotalAmountUseCase = new CalculateTotalAmountUseCase($subTotal, $deliveryAmount);
-        $total = $calculateTotalAmountUseCase->getTotal();
         $iva = $calculateTotalAmountUseCase->getIVA();
+        $total = $calculateTotalAmountUseCase->getTotal(); 
 
-        return view('checkout', [
-            'subTotal' => $subTotal,
-            'deliveryAmount' => $deliveryAmount,
+        $order = Order::create([
+            'sub_total' => $subTotal,
+            'delivery_amount' => $deliveryAmount,
             'iva' => $iva,
             'total' => $total,
+            'status' => 'pending',
+            'user_id' => $userId,
         ]);
+
+        foreach ($carts as $cart) {
+            OrderProduct::create([
+                'order_id' => $order->id,
+                'product_id' => $cart->product_id,
+                'price' => $cart->product->price,
+                'quantity' => $cart->quantity,
+                'sub_total' => $cart->product->price * $cart->quantity,
+            ]);
+        }
+
+        $cartRepository->clearCart($userId);
+
+        session()->flash(
+            'message',
+            'Su pedido ha sido creado correctamente, pronto nos pondremos en contacto con usted'
+        );
+
+        return redirect()->to('/');
     }
 }
