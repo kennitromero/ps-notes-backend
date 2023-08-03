@@ -65,3 +65,4 @@ URL del código: https://github.com/kennitromero/ps-notes-backend
     - ¿Qué se debe hacer técnicamente para cumplir con los requerimientos anteriormente mencionados?
         - Debemos crear unas tablas para guardar la información de la compra.
         - Vamos a crear la tabla orders y order con productos para guardar la información respectiva.
+- Visualización del histórico de órdenes con sus respectivos datos. Se mostrará la siguiente información: Código de la orden, el total de la orden, el estado, la fecha de creación de la orden y cuántos productos compró.
