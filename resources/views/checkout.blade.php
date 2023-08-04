@@ -1,32 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.main')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout</title>
-</head>
+@section('title-page')
+    Carrito
+@endsection
 
-<body>
-
-    <h1 style="text-align: center;">Esta es una tienda</h1>
-
-    <p style="text-align: center;">
-        Hola {{ auth()->user()->name }}
-    </p>
-
-    <form action="{{ url('logout') }}" method="POST" style="text-align:center;">
-        @csrf
-        <button type="submit">Cerrar Sesión</button>
-    </form>
-
+@section('main-page')
     <h4 style="text-align: center;">
         <small style="display: block">
             <a href="{{ url('/cart-summary') }}" style="text-align: center;">Volver al carrito</a>
         </small>
     </h4>
 
-    <table border="1" style="text-align: center;margin: 0 auto;">
+    <table class="table table-bordered text-center align-middle">
         <tr>
             <th>
                 Sub total
@@ -53,12 +38,8 @@
         </tr>
     </table>
 
-    <form action="{{ url('checkout') }}" method="POST" style="text-align: center;margin-top:20px;">
+    <form action="{{ url('checkout') }}" method="POST" class="text-center">
         @csrf
-
-        <button type="submit">Realizar Compra</button>
+        <button type="submit" class="btn btn-success">Realizar Compra</button>
     </form>
-
-</body>
-
-</html>
+@endsection
