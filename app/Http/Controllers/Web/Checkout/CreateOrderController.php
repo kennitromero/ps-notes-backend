@@ -8,7 +8,8 @@ use App\Repositories\EloquentCartRepository;
 use App\UseCases\{
     CalculateDeliveryAmountUseCase,
     CalculateSubTotalAmountUseCase,
-    CalculateTotalAmountUseCase
+    CalculateTotalAmountUseCase,
+    CalculateQuantityProductsUseCase
 };
 use Illuminate\Support\Facades\Auth;
 
@@ -20,6 +21,7 @@ class CreateOrderController
         $cartRepository = new EloquentCartRepository();
         $calculateSubTotalAmountUseCase = new CalculateSubTotalAmountUseCase();
         $calculateDeliveryAmountUseCase = new CalculateDeliveryAmountUseCase();
+        $calculateQuantityProductsUseCase = new CalculateQuantityProductsUseCase();
 
         $carts = $cartRepository->getUserCart($userId);
 
@@ -29,12 +31,14 @@ class CreateOrderController
         $calculateTotalAmountUseCase = new CalculateTotalAmountUseCase($subTotal, $deliveryAmount);
         $iva = $calculateTotalAmountUseCase->getIVA();
         $total = $calculateTotalAmountUseCase->getTotal(); 
+        $quantityTotal = $calculateQuantityProductsUseCase->execute($carts);
 
         $order = Order::create([
             'sub_total' => $subTotal,
             'delivery_amount' => $deliveryAmount,
             'iva' => $iva,
             'total' => $total,
+            'quantity_products' => $quantityTotal,
             'status' => 'pending',
             'user_id' => $userId,
         ]);

@@ -15,7 +15,6 @@ class EloquentOrderRepository
     public function getByUserId(int $userId): Collection
     {
         return Order::where('user_id', '=', $userId)
-            ->withCount('orderProducts')
             ->get();
     }
 
@@ -23,7 +22,6 @@ class EloquentOrderRepository
     {
         return Order::select($attributes)
             ->join('users', 'orders.user_id', '=', 'users.id')
-            ->withCount('orderProducts')
             ->where('users.email', '=', $userEmail)
             ->get();
     }

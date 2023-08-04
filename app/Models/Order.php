@@ -15,6 +15,7 @@ class Order extends Model
         'delivery_amount',
         'iva',
         'total',
+        'quantity_products',
         'status',
         'user_id',
     ];
