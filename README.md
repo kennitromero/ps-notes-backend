@@ -93,7 +93,7 @@ URL del código: https://github.com/kennitromero/ps-notes-backend
         - fullName
         - emailAddress
         - contactPhone
-        - dniNumber        
+        - dniNumber
         - address
         - city
         - state

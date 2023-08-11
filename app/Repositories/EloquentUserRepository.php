@@ -22,4 +22,9 @@ class EloquentUserRepository
     {
         return User::where('email', '=', $email)->first();
     }
+
+    public function findById(int $userId): ?User
+    {
+        return User::find($userId);
+    }
 }

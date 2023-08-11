@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Checkout;
 
 use App\Repositories\EloquentCartRepository;
+use App\Services\PaymentService;
 use App\UseCases\{
     CalculateDeliveryAmountUseCase,
     CalculateSubTotalAmountUseCase,
@@ -30,11 +31,15 @@ class CheckoutController
         $total = $calculateTotalAmountUseCase->getTotal();
         $iva = $calculateTotalAmountUseCase->getIVA();
 
+        $paymentService = new PaymentService();
+        $banks = $paymentService->getBanks();
+
         return view('checkout', [
             'subTotal' => $subTotal,
             'deliveryAmount' => $deliveryAmount,
             'iva' => $iva,
             'total' => $total,
+            'banks' => $banks
         ]);
     }
 }
