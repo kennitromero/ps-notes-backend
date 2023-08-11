@@ -2,64 +2,77 @@
 
 namespace App\Http\Controllers\Web\Checkout;
 
-use App\Models\Order;
-use App\Models\OrderProduct;
-use App\Repositories\EloquentCartRepository;
-use App\UseCases\{
-    CalculateDeliveryAmountUseCase,
-    CalculateSubTotalAmountUseCase,
-    CalculateTotalAmountUseCase,
-    CalculateQuantityProductsUseCase
-};
+use App\Repositories\EloquentOrderPaymentRepository;
+use App\Repositories\EloquentUserRepository;
+use App\Services\PaymentService;
+use App\UseCases\CreateOrderByUserCartUseCase;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Throwable;
 
 class CreateOrderController
 {
-    public function __invoke()
+    public function __invoke(Request $request)
     {
         $userId = Auth::id();
-        $cartRepository = new EloquentCartRepository();
-        $calculateSubTotalAmountUseCase = new CalculateSubTotalAmountUseCase();
-        $calculateDeliveryAmountUseCase = new CalculateDeliveryAmountUseCase();
-        $calculateQuantityProductsUseCase = new CalculateQuantityProductsUseCase();
 
-        $carts = $cartRepository->getUserCart($userId);
+        $contactPhone = $request->get('contact_phone');
+        $dniNumber = $request->get('dni_number');
+        $street = $request->get('address');
+        $city = $request->get('city');
+        $state = $request->get('state');
+        $financialInstitutionCode = $request->get('financial_institution_code'); // ToDo
 
-        $subTotal = $calculateSubTotalAmountUseCase->execute($carts);
-        $deliveryAmount = $calculateDeliveryAmountUseCase->execute($subTotal);
+        try {
+            $userRepository = new EloquentUserRepository();
+            $user = $userRepository->findById($userId);
 
-        $calculateTotalAmountUseCase = new CalculateTotalAmountUseCase($subTotal, $deliveryAmount);
-        $iva = $calculateTotalAmountUseCase->getIVA();
-        $total = $calculateTotalAmountUseCase->getTotal(); 
-        $quantityTotal = $calculateQuantityProductsUseCase->execute($carts);
+            $createOrderByUserCartUseCase = new CreateOrderByUserCartUseCase();
+            $order = $createOrderByUserCartUseCase->execute($userId);
 
-        $order = Order::create([
-            'sub_total' => $subTotal,
-            'delivery_amount' => $deliveryAmount,
-            'iva' => $iva,
-            'total' => $total,
-            'quantity_products' => $quantityTotal,
-            'status' => 'pending',
-            'user_id' => $userId,
-        ]);
 
-        foreach ($carts as $cart) {
-            OrderProduct::create([
+            $paymentService = new PaymentService();
+            $paymentService->setContextPublic($request->userAgent(), $request->cookie('laravel_session'));
+
+            $response = $paymentService->createTransaction(
+                $order,
+                $user,
+                [
+                    'contactPhone' => $contactPhone,
+                    'dniNumber' => $dniNumber,
+                    'street' => $street,
+                    'city' => $city,
+                    'state' => $state,
+                    'financialInstitutionCode' => $financialInstitutionCode
+                ]
+            );
+
+            $orderPaymentRepository = new EloquentOrderPaymentRepository();
+            $orderPaymentRepository->create([
                 'order_id' => $order->id,
-                'product_id' => $cart->product_id,
-                'price' => $cart->product->price,
-                'quantity' => $cart->quantity,
-                'sub_total' => $cart->product->price * $cart->quantity,
+                'transaction_order_id' => $response['jsonResponse']['transactionResponse']['orderId'],
+                'transaction_id' => $response['jsonResponse']['transactionResponse']['transactionId'],
+                'state'  => $response['jsonResponse']['transactionResponse']['state'],
+
+                'pending_reason' => $response['jsonResponse']['transactionResponse']['pendingReason'],
+                'response_code' => $response['jsonResponse']['transactionResponse']['responseCode'],
+
+                'reference_code' => $response['transactionAttributes']['referenceCode'],
+                'payment_method' => $response['transactionAttributes']['paymentMethod'],
+                'financial_institution_code' => $financialInstitutionCode,
+                'signature' => $response['transactionAttributes']['signature'],
+                'payer_full_name' => $user->name,
+                'payer_email_address' => $user->email,
+                'payer_contact_phone' => $contactPhone,
+                'payer_dni_number' => $dniNumber,
+                'payer_address' => $street,
+                'payer_city' => $city,
+                'payer_state' => $state,
             ]);
+
+            return redirect()->to($response['jsonResponse']['transactionResponse']['extraParameters']['BANK_URL']);
+        } catch (Throwable $th) {
+            return redirect()->back()->with('message', $th->getMessage());
         }
-
-        $cartRepository->clearCart($userId);
-
-        session()->flash(
-            'message',
-            'Su pedido ha sido creado correctamente, pronto nos pondremos en contacto con usted'
-        );
-
-        return redirect()->to('/');
     }
 }

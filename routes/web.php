@@ -14,7 +14,8 @@ use App\Http\Controllers\Web\Cart\{
 };
 use App\Http\Controllers\Web\Checkout\{
     CheckoutController,
-    CreateOrderController
+    CreateOrderController,
+    CheckoutSummaryController
 };
 use App\Http\Controllers\Web\Contacts\{
     CreateUIController,
@@ -54,5 +55,9 @@ Route::delete('cart/remove', RemoveProductController::class);
 Route::get('cart-summary', CartSummaryController::class);
 Route::get('checkout', CheckoutController::class);
 Route::post('checkout', CreateOrderController::class);
+Route::get('checkout-summary', CheckoutSummaryController::class);
 
 Route::get('orders', HistoryOrderController::class);
+Route::post('payu-notify-url', function () {
+    
+});

@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\Order;
 use Illuminate\Database\Eloquent\Collection;
 
-class EloquentOrderRepository 
+class EloquentOrderRepository
 {
     public function findById(int $orderId): ?Order
     {
@@ -24,6 +24,25 @@ class EloquentOrderRepository
             ->join('users', 'orders.user_id', '=', 'users.id')
             ->where('users.email', '=', $userEmail)
             ->get();
+    }
+
+    public function createOrder(
+        int $subTotal,
+        int $deliveryAmount,
+        int $iva,
+        int $total,
+        int $quantityTotal,
+        int $userId
+    ): Order {
+        return Order::create([
+            'sub_total' => $subTotal,
+            'delivery_amount' => $deliveryAmount,
+            'iva' => $iva,
+            'total' => $total,
+            'quantity_products' => $quantityTotal,
+            'status' => 'pending',
+            'user_id' => $userId,
+        ]);
     }
 
     public function updateStatusByOrderId(int $orderId, string $newStatus): void

@@ -66,3 +66,35 @@ URL del código: https://github.com/kennitromero/ps-notes-backend
         - Debemos crear unas tablas para guardar la información de la compra.
         - Vamos a crear la tabla orders y order con productos para guardar la información respectiva.
 - Visualización del histórico de órdenes con sus respectivos datos. Se mostrará la siguiente información: Código de la orden, el total de la orden, el estado, la fecha de creación de la orden y cuántos productos compró.
+- Necesitamos solicitar y guardar la información para crear la orden de pago en la pasarela de pagos.
+    - ¿Qué información necesitamos solicitar al usuario?
+        - Información del comprador
+            - contactPhone
+            - dniNumber
+            - address
+            - city
+            - state
+        - Información del pagador
+            - fullName
+            - emailAddress
+            - contactPhone
+            - dniNumber
+            - address
+            - city
+            - state
+    - Realizar la petición de pago a la API de Payu y redireccionamos al usuario a la URL que PayU nos devolvió.
+    - ¿Qué información voy a guardar en la base de datos respecto a la transacción?
+        - Código de la transacción de PayU = transactionId
+        - Código de referencia => referenceCode
+        - Método de pago => lapPaymentMethod
+        - Estado de la transacción => lapTransactionState (PENDGIN/DECLINED)
+        - Banco => pseBank
+        - Firma de seguridad => signature
+        - fullName
+        - emailAddress
+        - contactPhone
+        - dniNumber
+        - address
+        - city
+        - state
+    - Se debe crear una URL de confirmación de transacción, con el fin de saber si la transacción fue aprobado o delinada, para con ello, poder actualizar el estado de la transacción guardada de nuestra base de datos y saber si podemos modificar el estado de la orden, es decir, moverlo de Pending a Complete.
